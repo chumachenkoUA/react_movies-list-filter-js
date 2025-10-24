@@ -11,12 +11,14 @@ function filterMovies(movies, query) {
     return movies;
   }
 
+  const clearedQuery = clearText(query);
+
   return movies.filter(movie => {
     const movieTitle = movie.title.toLowerCase();
     const movieDescription = movie.description.toLowerCase();
 
-    const inMovieTitle = movieTitle.includes(clearText(query));
-    const inMovieDescription = movieDescription.includes(clearText(query));
+    const inMovieTitle = movieTitle.includes(clearedQuery);
+    const inMovieDescription = movieDescription.includes(clearedQuery);
 
     return inMovieTitle || inMovieDescription;
   });
