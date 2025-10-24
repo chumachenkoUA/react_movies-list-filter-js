@@ -4,6 +4,8 @@ import './App.scss';
 import { MoviesList } from './components/MoviesList';
 import moviesFromServer from './api/movies.json';
 
+const clearText = text => text.trim().toLowerCase();
+
 function filterMovies(movies, query) {
   if (!query) {
     return movies;
@@ -13,10 +15,10 @@ function filterMovies(movies, query) {
     const movieTitle = movie.title.toLowerCase();
     const movieDescription = movie.description.toLowerCase();
 
-    return (
-      movieTitle.includes(query.trim().toLowerCase()) ||
-      movieDescription.includes(query.trim().toLowerCase())
-    );
+    const inMovieTitle = movieTitle.includes(clearText(query));
+    const inMovieDescription = movieDescription.includes(clearText(query));
+
+    return inMovieTitle || inMovieDescription;
   });
 }
 
@@ -37,8 +39,8 @@ export const App = () => {
             <div className="control">
               <input
                 value={query}
-                onChange={e => {
-                  setQuery(e.target.value);
+                onChange={event => {
+                  setQuery(event.target.value);
                 }}
                 type="text"
                 id="search-query"
